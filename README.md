@@ -16,6 +16,6 @@ Tento skript vytváří ASCII artu na základě zadaného textu a umožňuje př
 
 ## Poznámky
 
-- Při přidávání skriptu do spuštění po startu systému mohou být vyžadována správcovská oprávnění.
+- Při přidávání skriptu do spuštění po startu systému mohou být vyžadována root oprávnění.
 - Ujistěte se, že testujete tento skript v nekritickém prostředí a provádíte změny v konfiguraci systému obezřetně.
 
