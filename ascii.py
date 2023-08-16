@@ -1,22 +1,34 @@
-# Skript pro Generování ASCII Artu na debianu
+import pyfiglet
+import subprocess
 
-Tento skript vytváří ASCII artu na základě zadaného textu a umožňuje přidání skriptu do spuštění po startu systému.
+def generate_ascii_art(text):
+    ascii_art = pyfiglet.figlet_format(text, font='slant')
+    return ascii_art
 
-## Použití
+def add_to_startup(script_path):
+    desktop_entry = f"""[Desktop Entry]
+Type=Application
+Exec=python3 "{script_path}"
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=ASCII Art Script
+Name=ASCII Art Script
+Comment[en_US]=ASCII art generator script
+Comment=ASCII art generator script
+"""
+    startup_dir = f"$HOME/.config/autostart/ascii_art_script.desktop"
+    subprocess.run(['mkdir', '-p', '$HOME/.config/autostart'])
+    with open(startup_dir, 'w') as desktop_file:
+        desktop_file.write(desktop_entry)
 
-1. Spusťte skript pomocí příkazu: `python3 ascii.py`
+user_input = input("Enter text for ASCII art: ")
+ascii_art = generate_ascii_art(user_input)
+print(ascii_art)
 
-2. Zadejte text, pro který chcete vytvořit ASCII umění.
-
-3. Skript vygeneruje ASCII umění a zobrazí ho na obrazovce.
-
-4. Skript vás zeptá, zda chcete přidat tento skript do spuštění po startu systému.
-
-5. Pokud souhlasíte, skript vytvoří soubor `.desktop` v adresáři `~/.config/autostart/`, aby se skript spustil automaticky při startu systému.
-
-## Poznámky
-
-- Při přidávání skriptu do spuštění po startu systému mohou být vyžadována správcovská oprávnění.
-- Ujistěte se, že testujete tento skript v nekritickém prostředí a provádíte změny v konfiguraci systému obezřetně.
-
+add_startup = input("Do you want to add this script to startup? (yes/no): ").lower()
+if add_startup == 'yes':
+    script_path = __file__
+    add_to_startup(script_path)
+    print("Script added to startup!")
 
